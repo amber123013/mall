@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+    <!-- 编码方式为utf-8 -->
+	<constant name="struts.i18n.encoding" value="UTF-8"></constant>
+    <!-- 对象的管理交由spring -->
+	<constant name="struts.objectFactory" value="spring"></constant>
+	<package name="basicstruts" extends="struts-default">
+        <interceptors>
+            <!-- 访问需登录页面验证 -->
+            <interceptor name="authorityInterceptor" class="cn.ambermoe.mall.interceptor.AuthInterceptor"></interceptor>
+            <!-- 使用拦截器为搜索栏下方分类提供数据  -->
+            <interceptor name="categoryNamesBelowSearchInterceptor" class="cn.ambermoe.mall.interceptor.CategoryNamesBelowSearchInterceptor"></interceptor>
+            <!-- 使用拦截器 设置购物车中商品数量 -->
+            <interceptor name="cartTotalItemNumberInterceptor" class="cn.ambermoe.mall.interceptor.CartTotalItemNumberInterceptor"></interceptor>
+            <!-- 拦截器栈 -->
+            <interceptor-stack name="auth-default">
+                <interceptor-ref name="authorityInterceptor"></interceptor-ref>
+                <interceptor-ref name="categoryNamesBelowSearchInterceptor"></interceptor-ref>
+                <interceptor-ref name="cartTotalItemNumberInterceptor"></interceptor-ref>
+                <interceptor-ref name="defaultStack"></interceptor-ref>
+            </interceptor-stack>
+        </interceptors>
+        <default-interceptor-ref name="auth-default"></default-interceptor-ref>
+	</package>
+    <!--action的404处理 -->  
+    <package name="error" extends="struts-default">  
+        <default-action-ref name="notFound" />  
+        <action name="notFound">  
+            <result>/404.jsp</result>  
+        </action>  
+    </package>  
+    <!-- 返回json字符串 -->
+    <package name="json" namespace="/" extends="json-default">
+        <action name="foregetaddress" class="cn.ambermoe.mall.action.ForeAction" method="getaddress">  
+            <result type="json">  
+                <param name="root">json</param>  
+            </result>  
+        </action> 
+    </package>
+</struts>
