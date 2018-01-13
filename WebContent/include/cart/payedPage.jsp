@@ -1,6 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" isELIgnored="false"%>
-     
+<script>
+$(function(){
+	var date = new Date();
+	/* 四天后 */
+	date.setDate(date.getDate() + 4); 
+	var month = date.getMonth() + 1;
+	var day = date.getDate();
+	$("#arriveDate").html("预计" + month + "月"+ day +"日送达");
+});
+</script>
 <div class="payedDiv">
     <div class="payedTextDiv">
         <img src="img/site/paySuccess.png">
@@ -13,7 +22,7 @@
             <li>实付款：<span class="payedInfoPrice">
             ￥<fmt:formatNumber type="number" value="${param.total}" minFractionDigits="2"/>
             </li>
-            <li>预计08月08日送达    </li>
+            <li id="arriveDate">预计08月08日送达    </li>
         </ul>
                  
         <div class="paedCheckLinkDiv">
@@ -29,7 +38,7 @@
      
     <div class="warningDiv">
         <img src="img/site/warning.png">
-        <b>安全提醒：</b>下单后，<span class="redColor boldWord">用QQ给您发送链接办理退款的都是骗子！</span>天猫不存在系统升级，订单异常等问题，谨防假冒客服电话诈骗！
+        <b>安全提醒：</b>下单后，<span class="redColor boldWord">用QQ给您发送链接办理退款的都是骗子！</span>
     </div>
  
 </div>

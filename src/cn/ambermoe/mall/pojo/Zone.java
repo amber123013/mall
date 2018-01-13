@@ -22,13 +22,36 @@ public class Zone {
     private int parentId;
     //省
     @Transient
-    List<Zone> provinces;
+    String province;
     //市
     @Transient
-    List<Zone> citys;
+    String city;
     //区
     @Transient
-    List<Zone> districts;
+    String district;
+    @Override
+    public String toString() {
+        return "Zone [id=" + id + ", addressId=" + addressId + ", address=" + address + ", parentId=" + parentId
+                + ", province=" + province + ", city=" + city + ", district=" + district + "]";
+    }
+    public String getProvince() {
+        return province;
+    }
+    public void setProvince(String province) {
+        this.province = province;
+    }
+    public String getCity() {
+        return city;
+    }
+    public void setCity(String city) {
+        this.city = city;
+    }
+    public String getDistrict() {
+        return district;
+    }
+    public void setDistrict(String district) {
+        this.district = district;
+    }
     public int getId() {
         return id;
     }
@@ -53,28 +76,7 @@ public class Zone {
     public void setParentId(int parentId) {
         this.parentId = parentId;
     }
-    public List<Zone> getProvinces() {
-        return provinces;
-    }
-    public void setProvinces(List<Zone> provinces) {
-        this.provinces = provinces;
-    }
-    public List<Zone> getCitys() {
-        return citys;
-    }
-    public void setCitys(List<Zone> citys) {
-        this.citys = citys;
-    }
-    public List<Zone> getDistricts() {
-        return districts;
-    }
-    public void setDistricts(List<Zone> districts) {
-        this.districts = districts;
-    }
-    @Override
-    public String toString() {
-        return "Zone [id=" + id + ", addressId=" + addressId + ", address=" + address + ", parentId=" + parentId
-                + ", provinces=" + provinces + ", citys=" + citys + ", districts=" + districts + "]";
-    }
+
+  
     
 }

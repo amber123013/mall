@@ -69,6 +69,7 @@
             <div class="makeReviewButtonDiv">
                 <input type="hidden" name="order.id" value="${order.id}">
                 <input type="hidden" name="product.id" value="${product.id}">
+                <input type="hidden" name="reviewNumber" value="${reviewNumber}">
                 <button type="submit">提交评价</button>
             </div>
         </form>

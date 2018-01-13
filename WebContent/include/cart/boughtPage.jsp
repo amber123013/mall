@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" isELIgnored="false"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<title>我的订单</title>
 <!-- 这里是订单页 --> 
 <script>
 var deleteOrder = false;
@@ -138,32 +139,54 @@ $(function(){
                                 <div class="orderListItemProductRealPrice">￥<fmt:formatNumber  minFractionDigits="2"  maxFractionDigits="2" type="number" value="${o.total}"/></div>
                                 <div class="orderListItemPriceWithTransport">(含运费：￥0.00)</div>
                             </td>
-                            <td valign="top" rowspan="${fn:length(o.orderItems)}" class="orderListItemButtonTD orderItemOrderInfoPartTD" width="100px">
-                                <c:if test="${o.status=='waitConfirm' }">
-                                    <a href="foreconfirmPay?order.id=${o.id}">
-                                        <button class="orderListItemConfirm">确认收货</button>
-                                    </a>
-                                </c:if>
-                                <c:if test="${o.status=='waitPay' }">
-                                    <a href="forealipay?order.id=${o.id}&total=${o.total}">
-                                        <button class="orderListItemConfirm">付款</button>
-                                    </a>                              
-                                </c:if>
-                                 
-                                <c:if test="${o.status=='waitDelivery' }">
-                                    <span>待发货</span>
-                                     <br/>
-                                     <button style="margin-top:5px" class="btn btn-info btn-sm ask2delivery" link="admin_order_delivery?order.id=${o.id}">催卖家发货</button>
-                                     
-                                </c:if>
- 
-                                <c:if test="${o.status=='waitReview' }">
-                                    <a href="forereview?order.id=${o.id}">
-                                        <button  class="orderListItemReview">评价</button>
-                                    </a>
-                                </c:if>
-                            </td>                     
+                            <c:if test="${o.status!='waitReview'}">
+	                            <td valign="top" rowspan="${fn:length(o.orderItems)}" class="orderListItemButtonTD orderItemOrderInfoPartTD" width="100px">
+	                                <c:if test="${o.status=='waitConfirm' }">
+	                                    <a href="foreconfirmPay?order.id=${o.id}">
+	                                        <button class="orderListItemConfirm">确认收货</button>
+	                                    </a>
+	                                </c:if>
+	                                <c:if test="${o.status=='waitPay' }">
+	                                    <a href="forealipay?order.id=${o.id}&total=${o.total}">
+	                                        <button class="orderListItemConfirm">付款</button>
+	                                    </a>                              
+	                                </c:if>
+	                                 
+	                                <c:if test="${o.status=='waitDelivery' }">
+	                                    <span>待发货</span>
+	                                     <br/>
+	                                     <button style="margin-top:5px" class="btn btn-info btn-sm ask2delivery" link="admin_order_delivery?order.id=${o.id}">催卖家发货</button>
+	                                     
+	                                </c:if>
+	 
+	                                <c:if test="${o.status=='waitReview' }">
+	                                 <td valign="top" rowspan="${fn:length(o.orderItems)}" class="orderListItemNumberTD orderItemOrderInfoPartTD" width="100px">
+	                                    <a href="forereview?order.id=${o.id}">
+	                                        <button  class="orderListItemReview">评价</button>
+	                                    </a>
+	                                
+	                                </c:if>
+	                                <c:if test="${o.status=='finish' }">
+                                        <a href="#nowwhere">
+                                            <button  class="btn success-btn" disabled="disabled">订单完成</button>
+                                        </a>
+                                    </c:if>
+	                            </td>
+                            </c:if>
                         </c:if>
+                        <!-- 每个订单项 需要单独进行评论 且所有 订单项都完成评论时 才将 order状态置为 finish -->
+                        <c:if test="${o.status=='waitReview'}">
+	                        <c:if test="${oi.review == null}">
+		                        <td>
+		                            <a href="forereview?order.id=${o.id}&reviewNumber=${st.count - 1}">
+		                                <button  class="orderListItemReview">评价</button>
+		                            </a>
+		                        </td>
+	                        </c:if>
+	                        <c:if test="${oi.review != null}">
+	                            <td></td>
+	                        </c:if>
+	                    </c:if>                     
                     </tr>
                 </c:forEach>      
                  

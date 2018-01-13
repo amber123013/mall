@@ -54,7 +54,7 @@
                     <th width="80px">图片管理</th>
                     <th width="80px">设置属性</th>
                     <th width="42px">编辑</th>
-                    <th width="42px">删除</th>
+                    <th width="42px">下架</th>
                 </tr>
             </thead>
             <tbody>
@@ -82,9 +82,9 @@
                          
                         <td><a href="admin_product_edit?product.id=${p.id}"><span
                                 class="glyphicon glyphicon-edit"></span></a></td>
-                        <td><a deleteLink="true"
+                        <td><a takenoffLink="true"
                             href="admin_product_delete?product.id=${p.id}"><span
-                                class="     glyphicon glyphicon-trash"></span></a></td>
+                                class="glyphicon glyphicon-floppy-save"></span></a></td>
  
                     </tr>
                 </c:forEach>

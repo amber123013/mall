@@ -11,7 +11,7 @@
             <fmt:formatDate value="${order.payDate}" pattern="yyyy-MM-dd HH:mm:ss"/> 
         </div>
         <div class="confirmPayTime3">
-            yyyy-MM-dd HH:mm:ss 
+            <fmt:formatDate value="${order.deliveryDate}" pattern="yyyy-MM-dd HH:mm:ss"/> 
         </div>
          
     </div>
@@ -52,11 +52,7 @@
         <table class="confirmPayOrderDetailTable">
             <tr>
                 <td>订单编号：</td>
-                <td>${order.orderCode} <img width="23px" src="img/site/confirmOrderTmall.png"></td>
-            </tr>
-            <tr>
-                <td>卖家昵称：</td>
-                <td>天猫商铺 <span class="confirmPayOrderDetailWangWangGif"></span></td>
+                <td>${order.orderCode} </td>
             </tr>
             <tr>
                 <td>收货信息： </td>
@@ -70,7 +66,7 @@
          
     </div>
     <div class="confirmPayButtonDiv">
-        <div class="confirmPayWarning">请收到货后，再确认收货！否则您可能钱货两空！</div>
+        <div class="confirmPayWarning">请收到货后，再确认收货！</div>
         <a href="foreorderConfirmed?order.id=${order.id}"><button class="confirmPayButton">确认支付</button></a>
     </div>
 </div>

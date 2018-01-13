@@ -20,6 +20,7 @@ import org.springframework.web.util.HtmlUtils;
 import com.opensymphony.xwork2.ActionContext;
 import com.sun.net.httpserver.Authenticator.Success;
 
+import cn.ambermoe.mall.comparator.OrderComparator;
 import cn.ambermoe.mall.comparator.ProductAllComparator;
 import cn.ambermoe.mall.comparator.ProductDateComparator;
 import cn.ambermoe.mall.comparator.ProductPriceComparator;
@@ -32,6 +33,7 @@ import cn.ambermoe.mall.pojo.Zone;
 import cn.ambermoe.mall.service.OrderService;
 import cn.ambermoe.mall.service.ProductImageService;
 import cn.ambermoe.mall.util.JsonUtils;
+import cn.ambermoe.mall.util.Page;
 
 public class ForeAction extends Action4Result {
     /**
@@ -107,6 +109,9 @@ public class ForeAction extends Action4Result {
     @Action("foreproduct")
     public String product() {
         t2p(product);
+        if(0 == product.getSale()) {
+            // 跳转到提示 当前产品已下架的页面 
+        }
         productImageService.setFirstProductImage(product);
 
         productSingleImages = productImageService.list("product", product, "type", ProductImageService.type_single);
@@ -119,7 +124,11 @@ public class ForeAction extends Action4Result {
         reviews = reviewService.listByParent(product);
 
         productService.setSaleAndReviewNumber(product);
-
+        //如果登陆 记录浏览历史
+        User u = (User)ActionContext.getContext().getSession().get("user");
+        if(null != u) {
+            footService.changeToFirst(product, u);
+        }
         return "product.jsp";
     }
     //检查是否登陆
@@ -154,6 +163,8 @@ public class ForeAction extends Action4Result {
      */
     @Action("forecategory")
     public String category() {
+        if(null == page)
+            page = new Page();
         t2p(category);
         productService.fill(category);
         productService.setSaleAndReviewNumber(category.getProducts());
@@ -212,7 +223,7 @@ public class ForeAction extends Action4Result {
     public String buyone() {
         User user = (User)ActionContext.getContext().getSession().get("user");
         boolean found = false;
-        //查找出该用户 为创建订单的订单项
+        //查找出该用户 未创建订单的订单项
         List<OrderItem> ois = orderItemService.list("user", user, "order", null);
         for(OrderItem oi:ois) {
             if(oi.getProduct().getId() == product.getId()) {
@@ -224,9 +235,6 @@ public class ForeAction extends Action4Result {
                 break;
             }
         }
-        //下拉款省份
-        zone = new Zone();
-        zone.setProvinces(zoneService.list("parentId", 0));
         //b
         if(!found) {
             OrderItem oi = new OrderItem();
@@ -246,8 +254,8 @@ public class ForeAction extends Action4Result {
      * 这个action 直接在 struts.xml 中配置 
      */
     public String getaddress() {
-        
-        json = JsonUtils.toJson(zoneService.list("parentId", zone.getAddressId()));
+        zones = zoneService.list("parentId", zone.getAddressId());
+        //json = JsonUtils.toJson(zoneService.list("parentId", zone.getAddressId()));
         return "success";
     }
     /**
@@ -267,9 +275,9 @@ public class ForeAction extends Action4Result {
             orderItems.add(oi);
             productImageService.setFirstProductImage(oi.getProduct());
         }
+        ActionContext.getContext().getSession().put("orderItems", orderItems);
         //下拉款省份
-        zone = new Zone();
-        zone.setProvinces(zoneService.list("parentId", 0));
+        zones = zoneService.list("parentId", 0);
         
         return "buy.jsp";
     }
@@ -369,9 +377,23 @@ public class ForeAction extends Action4Result {
         order.setUser(user);
         order.setStatus(OrderService.waitPay);
         total = orderService.createOrder(order, ois);
+        System.out.println(order.toString());
         return "alipayPage";
     }
-    
+    public String ajaxcreateOrder() {
+        List<OrderItem> ois = (ArrayList<OrderItem>) ActionContext.getContext().getSession().get("orderItems");
+        if(ois.isEmpty())
+            return "login.jsp";
+        User user = (User) ActionContext.getContext().getSession().get("user");
+        String orderCode = new SimpleDateFormat("yyyyMMddHHmmssSSS").format(new Date()) + RandomUtils.nextInt(10000);
+        order.setOrderCode(orderCode);
+        order.setCreateDate(new Date());
+        order.setUser(user);
+        order.setStatus(OrderService.waitPay);
+        total = orderService.createOrder(order, ois);
+        System.out.println(order.toString());
+        return "success";
+    }
     //跳转到页面
     @Action("forealipay")
     public String alipay() {
@@ -404,6 +426,7 @@ public class ForeAction extends Action4Result {
         User user = (User)ActionContext.getContext().getSession().get("user");
         orders = orderService.listByUserWithoutDelete(user);
         orderItemService.fill(orders);
+        Collections.sort(orders, new OrderComparator());
         return "bought.jsp";
     }
     //为order填充orderItem 并跳转到 确认收货页面
@@ -437,7 +460,7 @@ public class ForeAction extends Action4Result {
         t2p(order);
         // 填充在review 页面所需的数据
         orderItemService.fill(order);
-        product = order.getOrderItems().get(0).getProduct();
+        product = order.getOrderItems().get(reviewNumber).getProduct();
         reviews = reviewService.listByParent(product);
         productService.setSaleAndReviewNumber(product);
         return "review.jsp";
@@ -447,7 +470,7 @@ public class ForeAction extends Action4Result {
     public String doreview() {
         t2p(order);
         t2p(product);
-        order.setStatus(OrderService.finish);
+        
         //取出评论进行转义 使特殊字符失效
         String content = review.getContent();
         content = HtmlUtils.htmlEscape(content);
@@ -458,9 +481,43 @@ public class ForeAction extends Action4Result {
         review.setCreateDate(new Date());
         review.setUser(user);
         reviewService.save(review);
-        orderService.update(order);
+        // 为orderItem 设置 review
+        orderItemService.fill(order);
+        orderItem = (OrderItem)order.getOrderItems().get(reviewNumber);
+        orderItem.setReview(review);
+        orderItemService.update(orderItem);
+        
+        //当订单的所有订单项都 评论完成后 更新订单状态为 完成
+        if(orderItemService.list("order", order, "review", null).size() == 0) {
+            order.setStatus(OrderService.finish);
+            orderService.update(order);
+        }
         //只显示评论
         showonly = true;
         return "reviewPage";
+    }
+    
+    @Action("foreaddaddress")
+    public String ajaxAddAddress() {
+        deliveryAddress.setCreateTime(new Date());
+        User user = (User)ActionContext.getContext().getSession().get("user");
+        deliveryAddress.setUser(user);
+        deliveryAddress.setAddressFlag(1);
+        //addressId --> name
+        Zone province = (Zone)zoneService.list("addressId",Integer.parseInt(deliveryAddress.getProvince())).get(0);
+        deliveryAddress.setProvince(province.getAddress());
+        Zone city = (Zone)zoneService.list("addressId",Integer.parseInt(deliveryAddress.getCity())).get(0);
+        deliveryAddress.setCity(city.getAddress());
+        Zone district = (Zone)zoneService.list("addressId",Integer.parseInt(deliveryAddress.getDistrict())).get(0);
+        deliveryAddress.setDistrict(district.getAddress());
+        
+        deliveryAddressService.save(deliveryAddress);
+        return "success.jsp";
+    }
+    
+    public String ajaxGetAddress() {
+        User user = (User)ActionContext.getContext().getSession().get("user");
+        deliveryAddresss = deliveryAddressService.list("user", user, "addressFlag", 1);
+        return "success";
     }
 }

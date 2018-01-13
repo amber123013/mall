@@ -44,6 +44,8 @@ public class Product implements Serializable{
     private int stock;
     //创建日期
     private Date createDate;
+    //是否上架 1代表上架 0代表下架 
+    private int sale = 1;
     
     @Transient  //瞬时字段 不会被保存到数据库中
     private ProductImage firstProductImage;
@@ -58,8 +60,14 @@ public class Product implements Serializable{
     @Transient
     private int saleCount;
     
-    
-    public List<ProductImage> getProductSingleImages() {
+
+    public int getSale() {
+        return sale;
+    }
+    public void setSale(int sale) {
+        this.sale = sale;
+    }
+    public List<ProductImage> getProductSingleImages() { 
         return productSingleImages;
     }
     public void setProductSingleImages(List<ProductImage> productSingleImages) {

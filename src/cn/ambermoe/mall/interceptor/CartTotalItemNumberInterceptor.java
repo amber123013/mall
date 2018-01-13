@@ -36,7 +36,7 @@ public class CartTotalItemNumberInterceptor extends AbstractInterceptor {
         String contextPath = servletContext.getContextPath();
         String uri = request.getRequestURI();
         uri = StringUtils.remove(uri, contextPath);
-        if(uri.startsWith("/fore")) {
+        if(uri.startsWith("/fore") || uri.startsWith("/personal")) {
             User user = (User)ac.getSession().get("user");
             //未登录显示0件
             if(null == user) {

@@ -47,7 +47,7 @@ $(function(){
                                     </tr>
                                     <tr>
                                         <td>
-                                            <input id="filepathSingle" type="file" name="img" />
+                                            <input id="filepathSingle" type="file" name="img" multiple="multiple"/>
                                         </td>
                                     </tr>
                                     <tr class="submitTR">
@@ -100,7 +100,7 @@ $(function(){
                                     </tr>
                                     <tr>
                                         <td>
-                                            <input id="filepathDetail"  type="file" name="img" />
+                                            <input id="filepathDetail"  type="file" name="img" multiple="multiple"/>
                                         </td>
                                     </tr>
                                     <tr class="submitTR">

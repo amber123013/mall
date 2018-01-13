@@ -2,6 +2,9 @@ package cn.ambermoe.mall.action;
 
 import java.util.List;
 
+import cn.ambermoe.mall.pojo.DeliveryAddress;
+import cn.ambermoe.mall.pojo.Favorite;
+import cn.ambermoe.mall.pojo.Foot;
 import cn.ambermoe.mall.pojo.Admin;
 import cn.ambermoe.mall.pojo.Category;
 import cn.ambermoe.mall.pojo.Order;
@@ -33,6 +36,9 @@ public class Action4Pojo extends Action4Pagination {
     protected OrderItem orderItem;
     protected Admin admin;
     protected Zone zone;
+    protected DeliveryAddress deliveryAddress;
+    protected Foot foot;
+    protected Favorite favorite;
 
     protected List<Category> categorys;
     protected List<Property> propertys;
@@ -42,11 +48,58 @@ public class Action4Pojo extends Action4Pagination {
     protected List<Order> orders;
     protected List<Review> reviews;
     protected List<OrderItem> orderItems;
+    protected List<Zone> zones;
+    protected List<DeliveryAddress> deliveryAddresss;
+    protected List<Foot> foots;
+    protected List<Favorite> favorites;
     
     protected List<ProductImage> productSingleImages;
     protected List<ProductImage> productDetailImages;
 
     
+
+    public Favorite getFavorite() {
+        return favorite;
+    }
+    public void setFavorite(Favorite favorite) {
+        this.favorite = favorite;
+    }
+    public List<Favorite> getFavorites() {
+        return favorites;
+    }
+    public void setFavorites(List<Favorite> favorites) {
+        this.favorites = favorites;
+    }
+    public Foot getFoot() {
+        return foot;
+    }
+    public void setFoot(Foot foot) {
+        this.foot = foot;
+    }
+    public List<Foot> getFoots() {
+        return foots;
+    }
+    public void setFoots(List<Foot> foots) {
+        this.foots = foots;
+    }
+    public DeliveryAddress getDeliveryAddress() {
+        return deliveryAddress;
+    }
+    public void setDeliveryAddress(DeliveryAddress deliveryAddress) {
+        this.deliveryAddress = deliveryAddress;
+    }
+    public List<DeliveryAddress> getDeliveryAddresss() {
+        return deliveryAddresss;
+    }
+    public void setDeliveryAddresss(List<DeliveryAddress> deliveryAddresss) {
+        this.deliveryAddresss = deliveryAddresss;
+    }
+    public List<Zone> getZones() {
+        return zones;
+    }
+    public void setZones(List<Zone> zones) {
+        this.zones = zones;
+    }
     public Zone getZone() {
         return zone;
     }

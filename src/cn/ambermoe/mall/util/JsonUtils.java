@@ -10,7 +10,8 @@ public class JsonUtils {
         for(Zone zone: list) {
             json += "{\"addressId\":" + zone.getAddressId() + ",\"address\":\"" + zone.getAddress() + "\"},";
         }
-        json = json.substring(0, json.length() - 1);
+        if(json.length() > 1)
+            json = json.substring(0, json.length() - 1);
         json += "]";
         return json;
     }

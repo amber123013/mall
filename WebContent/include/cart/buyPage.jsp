@@ -2,12 +2,93 @@
     pageEncoding="UTF-8" isELIgnored="false"%>
 <title>结算页</title>
 <script>
+
 $(function(){
+	var total = ${total}
+	/* 文档加载完成时载入收货地址 */
+	ajaxgetAddress();
 	$("#addAddress").click(function(){
 		$("#addressModal").modal('show');
 	});
+	/* 使用ajax 提交地址 */
+	$("#addAddressForm").submit(function(){
+		var formParam = $("#addAddressForm").serialize();//序列化表格内容为字符串  
+		$.ajax({ 
+	        type:'post',
+	        url:'foreaddaddress',  
+	        data:formParam,  
+	        success:function(data){
+	        	if("success" == data) {
+	        		$("#addressModal").modal('hide');
+	        		/* 清空表单 */
+	        		$("#addAddressForm").get(0).reset();
+	        		/* 从服务器获取收货地址信息 */
+	        		ajaxgetAddress();
+	        	}
+	        }  
+		});
+	return false;
+	});
+	/* 提交收货地址  用于创建订单 */
+	$("#forecreateOrder").submit(function(){
+		var page = "foreAjaxcreateOrder";
+		var address = $(".defaultAddr .default-address span").text();
+		var userMessage = $(".leaveMessageTextarea").val();
+		var post = $(".defaultAddr #post").text();
+		var name = $(".defaultAddr #name").text();
+		var phone = $(".defaultAddr #userPhone").text();
+ 	 	$.post(
+			page,
+			{"order.address":address,
+			 "order.post":post,
+			 "order.receiver":name,
+			 "order.mobile":phone,
+			 "order.userMessage":userMessage},
+			 function(result){
+				 window.location.href="forealipay?order.id=" + result.id + "&total="+total;
+			 }
+		);
+ 	 	return false;
+	});
 });
+function ajaxgetAddress() {
+	var page = "foreAjaxgetaddress"; 
+	$.get(
+         page,
+         function(result){
+             var str = "";
+             for(var i=0; i<result.length;i++) {
+                 if(result[i].isDefault == 1)
+                     str += "<li class=\"user-addresslist defaultAddr\" onclick=\"addressSelected(this)\">";
+                 else
+                     str += "<li class=\"user-addresslist\" disabled=\"disabled\" onclick=\"addressSelected(this)\">";
+	            str +=    "<div class=\"address-left\">" +
+				"<div class=\"user\">" +
+				"<span id=\"name\">" + result[i].userName + "</span>" + " "+"<span id=\"post\">"  + result[i].postCode +"</span>"+ "</div>" + "<div id=\"userPhone\">" + result[i].userPhone + 
+				"</div>" +
+				"<div class=\"default-address\">" +
+				"收货地址："+ "<span>" + result[i].province+" "+result[i].city+" "+result[i].district+" "+result[i].address + "</span>" +
+				"</div>" +
+				"</div>" +
+				"<div class=\"new-addr-btn\">" +
+				"<a href=\"#\" class=\"hidden\">设为默认</a>" +
+				"<span class=\"new-addr-bar hidden\">|</span>"  +
+				"<a href=\"#\">编辑</a>"  +
+				"<span class=\"new-addr-bar\">|</span>" + 
+				"<a href=\"javascript:void(0);\" onclick=\"delClick(this);\">删除</a>" +
+				"</div>" +
+				"</li>";
+            }
+             $("#displayaddressul").html(str);
+         }
+    );  
+}
 function provinceChange(select) {
+	if(select.value == -1) {
+		$("#citys").css("visibility","hidden");
+		$("#districts").css("visibility","hidden");
+		return;
+	}
     $("#citys").css("visibility","visible");
     $("#districts").css("visibility","hidden");
     var page = "foregetaddress"; 
@@ -17,39 +98,94 @@ function provinceChange(select) {
             page,
             {"zone.addressId":select.value},
             function(result){
-                var list = eval("("+result+")");
-                alert
+
                 var str;
-            	for(var i=0; i<list.length;i++) {
-            		str += "<option value='"+ list[i].addressId +"'>"+list[i].address+"</option> ";
+            	for(var i=0; i<result.length;i++) {
+            		str += "<option value='"+ result[i].addressId +"'>"+result[i].address+"</option> ";
             	}
-                str = "<option>请选择...</option>" + str;
+                str = "<option value=\"-1\">请选择...</option>" + str;
             	$("#citys").html(str);
             }
     );  
 }
 function cityChange(select) {
-    $("#districts").css("visibility","visible");
+    if(select.value == -1) {
+    	$("#districts").css("visibility","hidden");
+    	return;
+    }
     var page = "foregetaddress";
     $("#districts").html("");
     $.get(
             page,
             {"zone.addressId":select.value},
             function(result){
-                var list = eval("("+result+")");
-                alert
+                if(result.length > 0)
+                    $("#districts").css("visibility","visible");
                 var str;
-                for(var i=0; i<list.length;i++) {
-                    str += "<option value='"+ list[i].addressId +"'>"+list[i].address+"</option> ";
+                for(var i=0; i<result.length;i++) {
+                    str += "<option value='"+ result[i].addressId +"'>"+result[i].address+"</option> ";
                 }
-                str = "<option>请选择...</option>" + str;
+                str = "<option value=\"-1\">请选择...</option>" + str;
                 $("#districts").html(str);
             }
     );  
 }
+/* 切换地址 */
+function addressSelected(click) {
+	$(".user-addresslist").each(function(){
+		$(this).attr("class", "user-addresslist");
+		//设置disabled 为true 会使控件不可用（表单提交是选择忽略 。。还未验证
+		$(this).attr("disabled", "true");
+    });
+	$(click).attr("class", "user-addresslist defaultAddr");
+	$(click).removeAttr("disabled");
+}
 </script>
+<div class="modal fade" id="addressModal" tabindex="-1" role="dialog" style="margin-top:6%">
+    <div class="panel panel-warning addAddress">
+          <div class="panel-heading" style="text-align: center">新增地址</div>
+          <div class="panel-body">
+              <form method="post" id="addAddressForm" action="">
+                    <div class="addarea">
+                        <label>收货人</label>
+                        <input type="text" name="deliveryAddress.userName"  id="user-name" placeholder="收货人" required="required">
+                    </div>
+                    <div class="addarea">
+                        <label >手机号码</label>
+                        <input type="text" name="deliveryAddress.userPhone"  placeholder="手机号码" required="required">
+                    </div>
+                    <div class="addarea">
+                        <label >邮编</label>
+                        <input type="text" name="deliveryAddress.postCode"  placeholder="不知道填 0000" required="required">
+                    </div>
+                    <div class="addarea">
+                        <label >地址</label>
+                        <select id="provinces" name="deliveryAddress.province" style="visibility:visible" onchange="provinceChange(this)">
+                            <option value="-1">请选择...</option>
+                            <c:forEach items="${zones}" var="zone">
+                                <option value="${zone.addressId}">${zone.address}</option>
+                            </c:forEach>
+                        </select>
+                        <select id="citys" name="deliveryAddress.city" onchange="cityChange(this)">
+                        </select>
+                        <select id="districts" name="deliveryAddress.district">
+                        </select>
+                    </div>
+                    <div class="addarea">
+                        <label >详细地址</label>
+                        <textarea rows="3"  name="deliveryAddress.address" placeholder="输入详细地址" required="required"></textarea><br/>
+                        <small>100字以内写出你的详细地址...</small>
+                    </div><br/>
+                    <div class="addarea">
+                        <input type="submit" class="btn btn-success" value="提交"/>
+                        <input type="button" data-dismiss="modal" class="btn btn-default" value="取消"/>
+                    </div>
+              </form>
+          </div>
+    </div>
+</div>
 <div class="buyPageDiv">
-  <form action="forecreateOrder" method="post">
+  <form id="forecreateOrder" action="forecreateOrder" method="post">
    
     <div class="buyFlow">
         <img class="pull-left" src="img/site/logo4.png" height="120px">
@@ -60,40 +196,59 @@ function cityChange(select) {
     
     <div class="address">
         <div class="addressTip">确认收货地址&nbsp;&nbsp;&nbsp;&nbsp;
-        <input type="button" id="addAddress" class="btn btn-info" value="使用新地址"> </div>
-        
-        <div class="modal" id="addressModal" tabindex="-1" role="dialog" style="margin-top:6%">
-            <div class="panel panel-warning addAddress">
-                  <div class="panel-heading">新增地址</div>
-		          <div class="panel-body">
-		              <form method="post" id="" action="foreAddAddress">
-		                    <div class="addarea">
-	                            <label>收货人</label>
-	                            <input type="text" id="user-name" placeholder="收货人">
-                            </div>
-                            <div class="addarea">
-                                <label >手机号码</label>
-                                <input type="text"  placeholder="手机号码">
-                            </div>
-                            <div class="addarea">
-                                <label >地址</label>
-                                <select id="provinces" style="visibility:visible" onchange="provinceChange(this)">
-                                    <option value="">请选择...</option>
-                                    <c:forEach items="${zone.provinces}" var="ps">
-                                        <option value="${ps.addressId}">${ps.address}</option>
-                                    </c:forEach>
-                                </select>
-                                <select id="citys" onchange="cityChange(this)">
-                                </select>
-                                <select id="districts">
-                                </select>
-                            </div>
-		              </form>
-		          </div>
-            </div>
+            <input type="button" id="addAddress" class="btn btn-info" value="使用新地址"> 
+            <input type="button" onclick="ajaxgetAddress()" class="btn btn-info" value="显示地址">
         </div>
-   
-        <div>
+        <div class="addressarea">
+			<ul id="displayaddressul" style="display:block;">
+				<!-- <li class="user-addresslist defaultAddr" onclick="addressSelected(this)">
+					<div class="address-left">
+						<div class="user DefaultAddr">
+							<span class="buy-address-detail"> <span class="buy-user">艾迪
+							</span> <span class="buy-phone">15888888888</span>
+							</span>
+						</div>
+						<div class="default-address DefaultAddr">
+							<span class="buy-line-title buy-line-title-type">收货地址：</span> 
+							<span
+								class="buy--address-detail"> 湖北省
+								武汉市 洪山区 
+								雄楚大道666号(中南财经政法大学)
+							</span>
+						</div>
+						<ins class="deftip">默认地址</ins>
+					</div>
+					<div class="clear"></div>
+					<div class="new-addr-btn">
+						<a href="#" class="hidden">设为默认</a> <span
+							class="new-addr-bar hidden">|</span> <a href="#">编辑</a> <span
+							class="new-addr-bar">|</span> <a href="javascript:void(0);"
+							onclick="delClick(this);">删除</a>
+					</div>
+				</li>
+				<li class="user-addresslist"  onclick="addressSelected(this)">
+					<div class="address-left">
+						<div class="user">
+							艾迪
+							15888888888
+						</div>
+						<div class="default-address">
+							收货地址：湖北省 武汉市 洪山区雄楚大道666号(中南财经政法大学)
+						</div>
+					</div>
+					<div class="new-addr-btn">
+						<a href="#" class="hidden">设为默认</a> 
+						<span class="new-addr-bar hidden">|</span> 
+						<a href="#">编辑</a> 
+						<span class="new-addr-bar">|</span> 
+						<a href="javascript:void(0);" onclick="delClick(this);">删除</a>
+					</div>
+				</li> -->
+			</ul>
+		</div>
+		<div class="clear"></div>
+		<br/>
+        <!-- <div>
          
             <table class="addressTable">
                 <tr>
@@ -115,11 +270,11 @@ function cityChange(select) {
                 </tr>
             </table>
              
-        </div>
+        </div> -->
  
     </div>
     
-    
+    <div class="clear"></div>
     <div class="productList">
         <div class="productListTip">确认订单信息</div>
          
@@ -203,11 +358,10 @@ function cityChange(select) {
         </div>
          
     </div>
- 
     <div class="orderItemTotalSumDiv">
         <div class="pull-right"> 
-            <span>实付款：</span>
-            <span class="orderItemTotalSumSpan">￥<fmt:formatNumber type="number" value="${total}" minFractionDigits="2"/></span>
+            <span>实付款：</span> 
+            <span class="orderItemTotalSumSpan">￥<span><fmt:formatNumber type="number" value="${total}" minFractionDigits="2"/></span></span>
         </div>
     </div>
      

@@ -67,8 +67,20 @@ import org.apache.struts2.convention.annotation.Results;
     @Result(name="homePage", type = "redirect", location="forehome"),
     @Result(name="buyPage", type = "redirect", location="forebuy?oiids=${oiid}"),
     @Result(name="alipayPage", type = "redirect", location="forealipay?order.id=${order.id}&total=${total}"),
-    @Result(name="reviewPage", type = "redirect", location="forereview?order.id=${order.id}&showonly=${showonly}"),
-
+    @Result(name="reviewPage", type = "redirect", location="forereview?order.id=${order.id}&showonly=${showonly}&reviewNumber=${reviewNumber}"),
+    /*前台个人中心*/
+    @Result(name = "index.jsp", location="/personal/index.jsp"),
+    @Result(name = "information.jsp", location = "/personal/information.jsp"),
+    @Result(name = "address.jsp", location = "/personal/address.jsp"),
+    @Result(name = "addressPage", type = "redirect", location = "/personaladdress"),
+    @Result(name = "safety.jsp", location = "/personal/safety.jsp"),
+    @Result(name = "password.jsp", location = "/personal/password.jsp"),
+    @Result(name = "logout", type = "redirect", location = "/forelogout"),
+    @Result(name = "email.jsp", location = "/personal/email.jsp"),
+    @Result(name = "foot.jsp", location = "/personal/foot.jsp"),
+    @Result(name = "footPage", type = "redirect", location = "/personalfoot"),
+    @Result(name = "favorite.jsp", location="/personal/favorite.jsp"),
+    @Result(name = "favoritePage", type = "redirect", location = "/personalfavorite")
 })
 public class Action4Result extends Action4Parameter {
     public Action4Result() {

@@ -8,6 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 @Entity
 @Table(name = "user")
 public class User implements Serializable{
@@ -21,7 +22,23 @@ public class User implements Serializable{
     private int id;
     private String password;
     private String name;
+    private String email;
+    /* 用于修改密码时临时接受新密码 */
+    @Transient
+    private String newPassword;
     
+    public String getEmail() {
+        return email;
+    }
+    public void setEmail(String email) {
+        this.email = email;
+    }
+    public String getNewPassword() {
+        return newPassword;
+    }
+    public void setNewPassword(String newPassword) {
+        this.newPassword = newPassword;
+    }
     public int getId() {
         return id;
     }

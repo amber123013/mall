@@ -25,7 +25,9 @@ $(function(){
     </li>    
   
     <c:forEach begin="0" end="${page.totalPage-1}" varStatus="status">
-      
+      <!-- <=20 限制 包含当前页右侧只能有 20/page.count 个页导航（这里是4页 
+           >=-10 限制 包含当前页左侧侧只能 4个页导航(也就是说 左侧会显示三页 其中的两页是10/page.count 
+                  还有一页是 当page.start == 0 时 status.count = 1 这里多出来一页  -->
         <c:if test="${status.count*page.count-page.start<=20 && status.count*page.count-page.start>=-10}">
             <li <c:if test="${status.index*page.count==page.start}">class="disabled"</c:if>>
                 <a 

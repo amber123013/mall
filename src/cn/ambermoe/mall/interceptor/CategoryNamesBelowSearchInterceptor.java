@@ -33,7 +33,7 @@ public class CategoryNamesBelowSearchInterceptor extends AbstractInterceptor {
         String contextPath = servletContext.getContextPath();
         String uri = request.getRequestURI();
         uri = StringUtils.remove(uri, contextPath);
-        if(uri.startsWith("/fore")) {
+        if(uri.startsWith("/fore") || uri.startsWith("/personal")) {
             List<Category> categorys = categoryService.list();
             ac.getSession().put("cs", categorys);
         }

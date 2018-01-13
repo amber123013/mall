@@ -32,7 +32,7 @@ public class CategoryAction extends Action4Result{
 //        File tmpfile = new File(tmpimageFolder,category.getId()+".jpg");
         
         try {
-            FileUtils.copyFile(img, file);
+            FileUtils.copyFile(img[0], file);
             BufferedImage img = ImageUtil.change2jpg(file);
             ImageIO.write(img, "jpg", file);
 //            ImageIO.write(img, "jpg", tmpfile);
@@ -72,7 +72,7 @@ public class CategoryAction extends Action4Result{
 //            File tmpFile = new File(tmpimageFolder, category.getId() + ".jpg");
             
             try {
-                FileUtils.copyFile(img, file);
+                FileUtils.copyFile(img[0], file);
                 BufferedImage img = ImageUtil.change2jpg(file);
                 ImageIO.write(img, "jpg", file);
 //                ImageIO.write(img, "jpg", tmpFile);

@@ -7,6 +7,8 @@
 	<constant name="struts.i18n.encoding" value="UTF-8"></constant>
     <!-- 对象的管理交由spring -->
 	<constant name="struts.objectFactory" value="spring"></constant>
+    <!-- 上传最大大小20m -->
+    <constant name="struts.multipart.maxSize" value="20485760"/> 
 	<package name="basicstruts" extends="struts-default">
         <interceptors>
             <!-- 访问需登录页面验证 -->
@@ -33,10 +35,27 @@
         </action>  
     </package>  
     <!-- 返回json字符串 -->
-    <package name="json" namespace="/" extends="json-default">
+    <package name="json" extends="json-default">
         <action name="foregetaddress" class="cn.ambermoe.mall.action.ForeAction" method="getaddress">  
-            <result type="json">  
-                <param name="root">json</param>  
+            <result name="success" type="json">
+                <!-- zones为action中的成员变量 需要有get方法 以json的形式传输 -->
+                <param name="root">zones</param>
+            </result>  
+        </action>
+        <action name="foreAjaxgetaddress" class="cn.ambermoe.mall.action.ForeAction" method="ajaxGetAddress">  
+            <result name="success" type="json">
+                <!-- zones为action中的成员变量 需要有get方法 以json的形式传输 -->
+                <param name="root">deliveryAddresss</param>
+            </result>  
+        </action>
+        <action name="foreAjaxcreateOrder" class="cn.ambermoe.mall.action.ForeAction" method="ajaxcreateOrder">  
+            <result name="success" type="json">
+                <param name="root">order</param>
+            </result>  
+        </action>
+        <action name="personal*" class="cn.ambermoe.mall.action.PersonalAction" method="{1}">  
+            <result name="success" type="json">
+                <param name="root">deliveryAddress</param>
             </result>  
         </action> 
     </package>

@@ -3,11 +3,23 @@
   
 
     
-<div class="myfooter hidden-print">  
-     <nav class="navbar-fixed-bottom">
-        <p style="font-size: 12px; text-align:center;margin-top:20px;">Copyright © amber食品商城 2017，All Rights Reserved</p>  
-     </nav>
-</div>  
-  
+<div id="footer"  class="footer" style="display: block;">
+     
+ 
+    <div class="horizontal_line">
+    </div>
+         
+     
+    <div style="clear:both"></div>
+     
+    <div id="copyright" class="copyright">
+        <div class="coptyrightMiddle">
+        <div class="license">
+            <span>2017 福建省 三明市 </span>
+            <div class="copyRightYear">© 2017-2018 AMBERMOE.CN 版权所有</div>
+        </div>
+     </div>
+   </div>
+</div>
 </body>
 </html>

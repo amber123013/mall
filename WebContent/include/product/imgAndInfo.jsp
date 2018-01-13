@@ -134,7 +134,17 @@ $(function(){
         }
     );
 });
- 
+/* ajax 添加产品到收藏 */
+function addFavorite(click) {
+	var page = $(click).attr("data-aldurl");
+	$.get(
+            page,
+            function(result){
+            	showFavoriteBox();
+            }
+    ); 
+}
+
 </script>
 <ol class="breadcrumb">
       <li><a href="${contextPath }">首页</a></li>
@@ -142,7 +152,7 @@ $(function(){
       <li class="active">${product.name }</li>
 </ol>
 <div class="imgAndInfo">
- 
+<!--     <div id="fixeddiv"><i class="glyphicon glyphicon-star"></i></div> -->
     <div class="imgInimgAndInfo">
         <img src="img/productSingle/${product.firstProductImage.id}.jpg" class="bigImg">
         <div class="smallImageDiv">
@@ -212,6 +222,10 @@ $(function(){
                      
             件</span>
             <span>库存${product.stock}件</span>
+            <a id="addFavorite" href="javascript:;" onclick="addFavorite(this)" data-aldurl="personaladdFavorite?favorite.product.id=${product.id}">
+                <i class="glyphicon glyphicon-star"></i>
+                <span>收藏商品</span>
+            </a>
         </div>
         <div class="serviceCommitment">
             <span class="serviceCommitmentDesc">服务承诺</span>

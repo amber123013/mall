@@ -31,6 +31,7 @@ public class Review {
 
     private String content;
     private Date createDate;
+
     public int getId() {
         return id;
     }

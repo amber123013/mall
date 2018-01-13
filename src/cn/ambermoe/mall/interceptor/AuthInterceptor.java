@@ -82,7 +82,7 @@ public class AuthInterceptor extends AbstractInterceptor {
         if(null == ac.getSession().get("admin")) {
             if(null != adminCookie) {
                 //cookie存在的话 设置session 
-                ac.getSession().put("user", adminService.get(Integer.parseInt(adminCookie.getValue())));
+                ac.getSession().put("admin", adminService.get(Integer.parseInt(adminCookie.getValue())));
             }
         }
         ServletContext servletContext = (ServletContext) ac.get(StrutsStatics.SERVLET_CONTEXT);

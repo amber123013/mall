@@ -4,16 +4,34 @@ pageEncoding="UTF-8" isELIgnored="false"%>
 
 <link href="css/fore/demo.css" rel="stylesheet" type="text/css" />
 <script>
+    var t1;
 	function tocart(){
 		window.location.href='forecart';
 	};
+	function hideFavoriteBox() {
+		$(".ibar_favorite_box").css("display", "none");
+	}
+	function showFavoriteBox() {
+		//如果未显示 提示 面板 则显示 并在一定时间后关闭
+		if("none" == $(".ibar_favorite_box").css("display")) {
+			/* $(".ibar_favorite_box").css("left", "-327px"); */
+			$(".ibar_favorite_box").css("display", "block");
+			// 4 秒后关闭弹出的提示框
+			t1 = setTimeout(hideFavoriteBox, 4000);
+		} else {
+			//已经在显示的话 则 刷新 显示时间
+			//清除定时器 并重新设置
+			clearTimeout(t1);
+			t1 = setTimeout(hideFavoriteBox, 4000);
+		}
+	}
 
 </script>
 <div class=tip>
 	<div id="sidebar">
 		<div id="wrap">
 			<div id="prof" class="item ">
-				<a href="# "> <span class="setting "></span>
+				<a href="personalindex"> <span class="setting "></span>
 				</a>
 				<div class="ibar_login_box status_login ">
 					<c:if test="${!empty user}">
@@ -27,7 +45,7 @@ pageEncoding="UTF-8" isELIgnored="false"%>
 							</ul>
 						</div>
 						<div class="login_btnbox ">
-							<a href="# " class="login_order ">我的订单</a> 
+							<a href="forebought" class="login_order ">我的订单</a> 
 							<a href="# " class="login_favorite ">我的收藏</a>
 						</div>
 						<i class="icon_arrow_white "></i>
@@ -57,16 +75,28 @@ pageEncoding="UTF-8" isELIgnored="false"%>
 				<p>购物车</p>
 				<p class="cart_num ">${cartTotalItemNumber}</p>
 			</div>
-			<div id="asset " class="item ">
-				<a href="# "> <span class="view "></span>
-				</a>
-				<div class="mp_tooltip ">
-					我的资产 <i class="glyphicon glyphicon-chevron-right"></i>
-				</div>
-			</div>
+			<div id="brand " class="item ">
+                <a href="personalfavorite">
+                    <span class="wdsc "><img src="img/site/wdsc.png "></span>
+                </a>
+                <div class="mp_tooltip " style="left: -121px; visibility: hidden;">
+                                                                                 我的收藏
+                    <i class="glyphicon glyphicon-chevron-right"></i>
+                </div>
+            </div>
+            <div class="ibar_favorite_box status_login " style="left: -267px;">
+                <i class="glyphicon glyphicon-chevron-right"></i>
+                <div class="bar-close glyphicon glyphicon-remove" onclick="hideFavoriteBox()"></div>
+                <div class="bar-content-head">
+                    <span class="bar-logo"></span><div class="success_info">成功加入收藏夹！</div>
+                    <div class="content"> 您可以
+	                    <a href="personalfavorite" target="_blank">查看收藏夹</a>
+                    </div>
+                 </div>
+            </div>
 
 			<div id="foot " class="item ">
-				<a href="# "> <span class="zuji "></span>
+				<a href="personalfoot"> <span class="zuji "></span>
 				</a>
 				<div class="mp_tooltip ">
 					我的足迹 <i class="glyphicon glyphicon-chevron-right"></i>

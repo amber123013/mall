@@ -14,7 +14,7 @@
  
         <span class="pull-right">
 	        <c:if test="${!empty user}">
-	            <a href="login.jsp" style="color:#ff4040;">Hi,${user.name}</a>
+	            <a href="personalindex" style="color:#ff4040;">Hi,${user.name}</a>
 	            <a href="forelogout">退出</a>     
 	        </c:if>
 	         

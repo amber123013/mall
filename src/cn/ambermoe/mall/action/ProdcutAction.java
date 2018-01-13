@@ -17,6 +17,7 @@ public class ProdcutAction extends Action4Result {
         page.setTotal(total);
         page.setParam("&category.id=" + category.getId());
         products = productService.list(page, category);
+        
         //设置产品图片缩略图
         for(Product product : products) {
             productImageService.setFirstProductImage(product);
@@ -32,11 +33,14 @@ public class ProdcutAction extends Action4Result {
         productService.save(product);
         return "listProductPage";
     }
-
+    /**
+     * 删除产品 直接将该产品设为下架状态
+     */
     @Action("admin_product_delete")
     public String delete() {
         t2p(product);
-        productService.delete(product);
+        product.setSale(0);
+        productService.update(product);;
         return "listProductPage";
     }
 

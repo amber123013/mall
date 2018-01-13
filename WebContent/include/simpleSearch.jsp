@@ -3,7 +3,7 @@
  
 <div class="simpleSearchOutDiv">
     <a href="${contextPath}">
-        <img id="simpleLogo" class="simpleLogo" src="img/site/logo4.png">    
+        <img id="simpleLogo" class="simpleLogo" src="<%=request.getContextPath()%>/img/site/logo4.png">    
     </a>
      
     <form action="foresearch" method="post" > 

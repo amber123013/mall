@@ -36,9 +36,9 @@ div.pageDiv{
 div.listDataTableDiv{
 	min-height:220px;
 }
-div.footer{
+/* div.footer{
 	margin:20px;
-}
+} */
 div.editPVDiv{
 	width:800px;
 	margin:0 auto;
@@ -114,4 +114,82 @@ th{
 。myfooter p {
 	text-align: center;
 	margin-top:15px;
+}
+div.footer {
+    margin-top: 137px;
+    border-top-style: solid;
+    border-top-width: 1px;
+    border-top-color: #e7e7e7;
+    background: #fff;
+}
+
+div.footer_ensure {
+    margin-top: 24px;
+    margin-bottom: 24px;
+    text-align: center;
+}
+
+div.horizontal_line{
+    border-top-style: solid;
+    border-top-width: 1px;
+    border-top-color: #e7e7e7;  
+}
+
+div.footer_desc {
+    padding-top: 30px;
+    margin: 0px auto;
+    max-width:1024px;
+    
+}
+
+div.footer_desc div.descColumn {
+    width: 20%;
+    float: left;
+    padding-left: 15px;
+}
+
+div.footer_desc div.descColumn span.descColumnTitle {
+    color: #646464;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+div.footer_desc a {
+    display: block;
+    padding-top: 3px;
+}
+
+div.copyright {
+    background-color: black;
+    border-top-style: solid;
+    border-top-width: 2px;
+    border-top-color: solid;
+    border-top-color: #F03726;
+    margin-top:20px;
+}
+div.coptyrightMiddle{
+    width:1024px;
+    margin:0px auto;
+    text-align:left;
+    position:relative;
+}
+
+
+div.copyright span.slash {
+    color: white;
+}
+
+div.license {
+    margin-left: 10px;
+    padding-bottom: 30px;
+    margin-top: 10px;
+}
+
+div.license div.copyRightYear {
+    margin: 10px 0px;
+    color: #686868;
+}
+
+div.license span {
+    color: #A4A4A4;
 }

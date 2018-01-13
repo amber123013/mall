@@ -78,6 +78,7 @@ function checkInt(id, name){
 $(function(){
     $("a").click(function(){
         var deleteLink = $(this).attr("deleteLink");
+        var  takenoffLink = $(this).attr("takenoffLink");
         console.log(deleteLink);
         if("true"==deleteLink){
             var confirmDelete = confirm("确认要删除");
@@ -85,6 +86,11 @@ $(function(){
                 return true;
             return false;
               
+        } else if("true" == takenoffLink) {
+        	var confirmtakenOff = confirm("确认要下架");
+            if(confirmtakenOff)
+                return true;
+            return false;
         }
     });
 })

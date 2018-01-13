@@ -7,6 +7,9 @@ import javax.annotation.Resource;
 import org.apache.commons.lang3.text.WordUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import cn.ambermoe.mall.service.DeliveryAddressService;
+import cn.ambermoe.mall.service.FavoriteService;
+import cn.ambermoe.mall.service.FootService;
 import cn.ambermoe.mall.service.AdminService;
 import cn.ambermoe.mall.service.BaseService;
 import cn.ambermoe.mall.service.CategoryService;
@@ -59,6 +62,15 @@ public class Action4Service extends Action4Pojo {
     
     @Autowired
     ZoneService zoneService;
+    
+    @Autowired
+    DeliveryAddressService deliveryAddressService;
+    
+    @Autowired
+    FootService footService;
+
+    @Autowired
+    FavoriteService favoriteService;
     /**
      * transient to persistent
      * 瞬时对象转换为持久对象

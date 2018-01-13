@@ -9,6 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -34,7 +35,19 @@ public class OrderItem implements Serializable{
     @JoinColumn(name = "uid")
     private User user;
     
+    @OneToOne
+    @JoinColumn(name = "rid")
+    private Review review;
+    
     private int number;
+
+    public Review getReview() {
+        return review;
+    }
+
+    public void setReview(Review review) {
+        this.review = review;
+    }
 
     public int getId() {
         return id;

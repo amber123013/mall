@@ -3,11 +3,11 @@
  <!-- 从session的属性"cs" 中获取到分类集合，并取第5个到第8个，一共4个来显示 -->
 <div class="searchOutDiv">
     <a href="${contextPath}">
-        <img id="logo" src="img/site/logo4.png" class="logo">
+        <img id="logo" src="<%=request.getContextPath()%>/img/site/logo4.png" class="logo">
     </a>
     <form action="foresearch" method="post" > 
         <div class="searchDiv">
-            <input name="keyword" type="text" value="${param.keyword}" placeholder="搜索内容。。。">
+            <input name="keyword" type="text" value="${param.keyword}" placeholder="搜全站。。。">
             <button  type="submit" class="searchButton">搜索</button>
             <div class="searchBelow">
                 <c:forEach items="${cs}" var="c" varStatus="st">

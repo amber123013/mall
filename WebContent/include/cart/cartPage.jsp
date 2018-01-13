@@ -204,6 +204,7 @@ function syncPrice(pid,num,price){
 </script> 
  
 <title>购物车</title>
+<c:if test="${!empty orderItems}">
 <div class="cartDiv">
     <div class="cartTitle pull-right">
         <span>已选商品  (不含运费)</span>
@@ -228,6 +229,7 @@ function syncPrice(pid,num,price){
                 </tr>
             </thead>
             <tbody>
+                
                 <c:forEach items="${orderItems }" var="oi">
                     <tr oiid="${oi.id}" class="cartProductItemTR">
                         <td>
@@ -272,7 +274,7 @@ function syncPrice(pid,num,price){
                             <a class="deleteOrderItem" oiid="${oi.id}"  href="#nowhere">删除</a>
                         </td>
                     </tr>
-                </c:forEach>              
+                </c:forEach>
             </tbody>
          
         </table>
@@ -294,3 +296,10 @@ function syncPrice(pid,num,price){
     </div>
      
 </div>
+ </c:if>
+ <c:if test="${empty orderItems}">
+     <div class="empty">
+          <div class="pic"></div>
+          <div class="tips">购物车里什么也没有，快去添加吧！</div>
+      <div>
+ </c:if>

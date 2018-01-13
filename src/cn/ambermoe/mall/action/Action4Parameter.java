@@ -32,8 +32,29 @@ public class Action4Parameter extends Action4Service {
     
     //用户15天免登陆 值为enable的话
     protected String userAutoLogin;
-    
+    //此参数暂时弃用
     protected String json;
+
+    //订单存在多个产品时 评价的是排序数
+    protected int reviewNumber; 
+    //用户提交的 验证码 （邮箱
+    protected String verificationCode;
+
+    public String getVerificationCode() {
+        return verificationCode;
+    }
+
+    public void setVerificationCode(String verificationCode) {
+        this.verificationCode = verificationCode;
+    }
+
+    public int getReviewNumber() {
+        return reviewNumber;
+    }
+
+    public void setReviewNumber(int reviewNumber) {
+        this.reviewNumber = reviewNumber;
+    }
 
     public String getJson() {
         return json;
