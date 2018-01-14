@@ -136,13 +136,25 @@ $(function(){
 });
 /* ajax 添加产品到收藏 */
 function addFavorite(click) {
-	var page = $(click).attr("data-aldurl");
-	$.get(
+    var page = "forecheckLogin";
+    $.get(
             page,
             function(result){
-            	showFavoriteBox();
+                if("success"==result){
+                	var pageAdd = $(click).attr("data-aldurl");
+                    $.get(
+                            pageAdd,
+                            function(result){
+                                showFavoriteBox();
+                            }
+                    ); 
+                }
+                else{
+                    $("#loginModal").modal('show');                     
+                }
             }
-    ); 
+    );      
+    return false;
 }
 
 </script>

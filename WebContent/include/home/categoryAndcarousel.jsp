@@ -57,41 +57,40 @@ $(function(){
      
 <div class="categoryWithCarousel">
  
-<div class="headbar show1">
-    <div class="head ">
-     
-        <span style="margin-left:10px" class="glyphicon glyphicon-th-list"></span>
-        <span style="margin-left:10px" >商品分类</span>
-         
-    </div>
-     
-    <div class="rightMenu">
-        <c:forEach items="${categorys}" var="c" varStatus="st">
-            <c:if test="${st.count<=8}">
-                <span>
-                <a href="forecategory?category.id=${c.id}">
-                    ${c.name}
-                </a></span>         
-            </c:if>
-        </c:forEach>
-
-    </div>
-
-</div>
-            
-<div style="position: relative">
-    <%@include file="categoryMenu.jsp" %>
-</div>
- 
-<div style="position: relative;left: 0;top: 0;">
-    <%@include file="productsAsideCategorys.jsp" %>
-</div>
-<div style="position: relative;left: 0;top: 0; ">
-    <%@include file="carousel.jsp" %>
-</div>
-<%-- <%@include file="carousel.jsp" %> --%>
- 
-<div class="carouselBackgroundDiv">
-</div>
- 
+	<div class="headbar show1">
+	    <div class="head ">
+	     
+	        <span style="margin-left:10px" class="glyphicon glyphicon-th-list"></span>
+	        <span style="margin-left:10px" >商品分类</span>
+	         
+	    </div>
+	     
+	    <div class="rightMenu">
+	        <c:forEach items="${categorys}" var="c" varStatus="st">
+	            <c:if test="${st.count<=7}">
+	                <span>
+	                <a href="forecategory?category.id=${c.id}">
+	                    ${c.name}
+	                </a></span>         
+	            </c:if>
+	        </c:forEach>
+	
+	    </div>
+	
+	</div>
+	            
+	<div style="position: relative">
+	    <%@include file="categoryMenu.jsp" %>
+	</div>
+	 
+	<div style="position: relative;left: 0;top: 0;">
+	    <%@include file="productsAsideCategorys.jsp" %>
+	</div>
+	<div style="position: relative;left: 0;top: 0; ">
+	    <%@include file="carousel.jsp" %>
+	</div>
+	<%-- <%@include file="carousel.jsp" %> --%>
+	 
+	<div class="carouselBackgroundDiv">
+	</div>
 </div>

@@ -108,7 +108,7 @@ public class AuthInterceptor extends AbstractInterceptor {
                 }
             }
         } else if(uri.startsWith("/admin") && !uri.startsWith("/admin_admin")) {
-            //是不登录的访问后台页面全部需要进行拦截
+            //不是登录的访问后台页面全部需要进行拦截
             if(!(uri.contains("admin_admin_login"))) {
                 Admin admin = (Admin)ac.getSession().get("admin");
                 if(null == admin) {
@@ -116,6 +116,14 @@ public class AuthInterceptor extends AbstractInterceptor {
     //                response.sendRedirect("adminLogin.jsp");
                     return null;
                 }
+            }
+        } else if(uri.startsWith("/personal")) {
+            //访问个人中心全部需要登录
+            User user = (User)ac.getSession().get("user");
+            //未登录
+            if(null == user) {
+                response.sendRedirect("login.jsp");
+                return null;
             }
         }
         return arg0.invoke();

@@ -119,9 +119,9 @@ div.searchDiv button:active{
 }
 div.categoryWithCarousel {
 	width: 950px;
-	margin: 0 auto;
+	/* margin: 0 auto; */
 	position:relative;
-    top: 15px;
+    /* top: 15px; */
 }
 
 div.carouselBackgroundDiv{
@@ -2470,7 +2470,7 @@ table td{
 }
 .addAddress .addarea .btn {
 	width: 20%;
-	margin: 15px;
+	margin: 5px;
 }
 .addressarea ul {
 	list-style: none;
@@ -2628,4 +2628,29 @@ div.empty .tips {
 }
 .content a {
 	color: blue !important;
+}
+div.categoryContent {
+	position: relative;
+	top: 15px;
+	width: 1110px;
+	margin: 0 auto;
+}
+div.recommend {
+	position: absolute;
+	top: 0px;
+	right: 0px;
+	width: 80px;
+}
+div.recommend .row {
+    padding: 0px;
+    position: relative;
+    bottom: 0px;
+    right: 53px;
+}
+div.recommend .row li {
+	margin-bottom: 10px;
+}
+div.recommend .row li img{
+	width: 144px;
+	height: 174px;
 }

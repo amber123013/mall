@@ -117,7 +117,7 @@ pageEncoding="UTF-8" isELIgnored="false"%>
 						<img src="../images/weixin_code_145.png " /><i
 							class="icon_arrow_white "></i>
 					</div></li>
-				<li class="qtitem "><a href="#top " class="return_top "><span
+				<li class="qtitem "><a href="javascript: scroll(0, 0) " class="return_top "><span
 						class="top "></span></a></li>
 			</div>
 

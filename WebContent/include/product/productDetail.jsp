@@ -13,7 +13,10 @@
          
         <div class="productParamterList">
             <c:forEach items="${propertyValues}" var="pv">
-                <span>${pv.property.name}:  ${fn:substring(pv.value, 0, 10)} </span>
+            <!-- 只显示有值的属性 -->
+                <c:if test="${!empty pv.value}">
+                    <span>${pv.property.name}:  ${fn:substring(pv.value, 0, 10)} </span>
+                </c:if>
             </c:forEach>
         </div>
         <div style="clear:both"></div>
