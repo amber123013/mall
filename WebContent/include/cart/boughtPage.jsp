@@ -194,5 +194,10 @@ $(function(){
         </c:forEach>
          
     </div>
-     
+    <c:if test="${empty orders}">
+      <div class="empty">
+          <div class="pic"></div>
+          <div class="tips">您还没有下过订单！</div>
+      </div>
+    </c:if>
 </div>

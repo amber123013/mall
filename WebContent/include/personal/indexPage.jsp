@@ -38,7 +38,7 @@
 		</div>
     </div> <!-- div.personalContent 的结束标签 -->
 
-    <div class="personalContent">
+    <div class="personalContent" style="min-height:356px">
 		<div class="m-order">
 			<div class="s-bar">
 				<i class="s-icon"></i>我的订单 <a class="i-load-more-item-shadow"
@@ -87,7 +87,12 @@
 	            </div>
 	        </c:if>
 			</c:forEach>
-	
+	    <c:if test="${empty orders}">
+            <div class="empty" style="padding-top: 15px;">
+                <div class="pic"></div>
+                <div class="tips">还没有下过订单</div>
+            </div>
+        </c:if>
 		</div>
 	</div>
 </div> <!-- div.col-main 的标签结束 -->

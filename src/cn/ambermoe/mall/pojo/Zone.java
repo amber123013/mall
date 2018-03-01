@@ -1,6 +1,7 @@
 package cn.ambermoe.mall.pojo;
 
-import java.util.List;
+
+import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,7 +13,11 @@ import javax.persistence.Transient;
 
 @Entity
 @Table(name = "zone")
-public class Zone {
+public class Zone  implements Serializable{
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name="id")

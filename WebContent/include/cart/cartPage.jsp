@@ -301,5 +301,5 @@ function syncPrice(pid,num,price){
      <div class="empty">
           <div class="pic"></div>
           <div class="tips">购物车里什么也没有，快去添加吧！</div>
-      <div>
+      </div>
  </c:if>

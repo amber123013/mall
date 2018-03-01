@@ -25,16 +25,20 @@ public class AdminAction extends Action4Result {
             addAdminCookie(admin_session.getId());
         return "listCategoryPage";
     }
-    
+    @Action("admin")
+    public String jump() {
+        return "listCategoryPage";
+    }
   //管理员退出登录
     @Action("admin_admin_logout")
     public String logout() {
         ActionContext.getContext().getSession().remove("admin");
-        ActionContext.getContext().getSession().remove("admin.uuid");
-        /*Cookie cookie = new Cookie("admin.uuid", null);
+//        ActionContext.getContext().getSession().remove("admin.uuid");
+        Cookie cookie = new Cookie("admin.uuid", null);
         cookie.setPath("/");
         cookie.setMaxAge(0);
-        ServletActionContext.getResponse().addCookie(cookie);*/
+        ServletActionContext.getResponse().addCookie(cookie);
+        
         return "adminLogin.jsp";  
     }
     

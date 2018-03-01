@@ -1,8 +1,8 @@
-package cn.ambermoe.mall.util;
+﻿package cn.ambermoe.mall.util;
 
 public class Page {
 
-    //开始页数 (默认初始化int 为0
+    // 当前页开始位置(默认初始化int 为0
     private int start;
     //每页显示记录条数
     private int count;

@@ -24,7 +24,7 @@
 			<img src="img/404/notfound.gif" height="320" width="520">
 			<p style="font-size: 24px; line-height: 70px">啊~哦~ 您要查看的页面不存在或已删除！</p>
 			<p style="margin-bottom: 30px">请检查您输入的网址是否正确</p>
-			<p style="font-size: 14px"; line-height: 20px">您可以回到 <a href="/mall" style="color: green;text-decoration:none;">网站首页</a> </p>
+			<p style="font-size: 14px"; line-height: 20px">您可以回到 <a href="/" style="color: green;text-decoration:none;">网站首页</a> </p>
 		</div>
 	</section>
 </body>

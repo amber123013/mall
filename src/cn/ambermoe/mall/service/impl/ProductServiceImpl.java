@@ -45,15 +45,15 @@ public class ProductServiceImpl extends BaseServiceImpl implements ProductServic
         
         category.setProducts(products);
     }
-    //填充 分类的推荐产品 一行八个
+    //填充 分类的推荐产品 一行五个
     @Override
     public void fillByRow(List<Category> categorys) {
-        int productNumberEachRow = 8;
+        int productNumberEachRow = 5;
         for(Category category:categorys) {
             List<Product> products = category.getProducts();
             List<List<Product>> productsByRow = new ArrayList<>();
             for(int i=0; i<products.size(); i+=productNumberEachRow) {
-                //将 分类的全部产品 分割成 n * 8 矩阵
+                //将 分类的全部产品 分割成 n * 5 矩阵
                 int size = i + productNumberEachRow;
                 size = size > products.size() ? products.size():size;
                 List<Product> productsOfEachRow = products.subList(i, size);

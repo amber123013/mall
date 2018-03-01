@@ -60,7 +60,7 @@ function addCart(click) {
 	        <div class="empty">
 	            <div class="pic"></div>
 	            <div class="tips">最近无浏览记录</div>
-	        <div>
+	        </div>
         </c:if>
         <div class="clear"></div>
     </div>

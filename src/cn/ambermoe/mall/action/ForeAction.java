@@ -65,6 +65,7 @@ public class ForeAction extends Action4Result {
     //前台登录
     @Action("forelogin")
     public String login() {
+        System.out.println(user.toString() + "输出登录信息");
         user.setName(HtmlUtils.htmlEscape(user.getName()));
         User user_session = userService.get(user.getName(),user.getPassword());
         if(null == user_session){
