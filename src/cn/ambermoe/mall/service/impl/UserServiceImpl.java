@@ -27,4 +27,12 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 
     }
 
+    @Override
+    public User get(String name) {
+        List<User> l  = list("name",name);
+        if(l.isEmpty())
+            return null;
+        return l.get(0);
+    }
+
 }

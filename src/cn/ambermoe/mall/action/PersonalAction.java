@@ -10,6 +10,7 @@ import org.apache.struts2.components.Password;
 import org.apache.struts2.convention.annotation.Action;
 
 import com.opensymphony.xwork2.ActionContext;
+import com.sun.org.apache.xpath.internal.operations.And;
 
 import cn.ambermoe.mall.comparator.OrderComparator;
 import cn.ambermoe.mall.pojo.DeliveryAddress;
@@ -99,10 +100,27 @@ public class PersonalAction extends Action4Result {
     @Action("personalcheckPassword")
     public String checkPassword() {
         User session_user = (User)ActionContext.getContext().getSession().get("user");
-        System.out.println(session_user.getPassword());
         if(session_user.getPassword().equals(user.getPassword()))
             return "success.jsp";
         return "fail.jsp";
+    }
+    @Action("forecheckNameAndEmail")
+    public String checkNameAndEmail() {
+        user = userService.get(user.getName());
+        if(null != user && null != user.getEmail()) 
+            return "success.jsp";
+        return "fail.jsp";
+    }
+    @Action("foreforgetPassword")
+    public String forgetPassword() {
+        user = userService.get(user.getName());
+        try {
+            EmailUtil.sendPassword(user.getPassword(), user.getEmail());
+        } catch (MessagingException e) {
+            e.printStackTrace();
+            return "fail.jsp";
+        }
+        return "success.jsp";
     }
     @Action("personaladdress")
     public String address() {

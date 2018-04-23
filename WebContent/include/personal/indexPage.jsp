@@ -12,7 +12,7 @@
 		        <div class="safeText"><a href="safety.html">账户安全:<em style="margin-left:20px ;">60</em>分</a>
 		        </div>
 		        <div class="m-address">
-		            <a href="address.html" class="i-trigger">收货地址<i class="am-icon-angle-right" style="padding-left:5px ;"></i></a>
+		            <a href="personaladdress" class="i-trigger">收货地址<i class="am-icon-angle-right" style="padding-left:5px ;"></i></a>
 		        </div>
 		    </div>
 		</div>

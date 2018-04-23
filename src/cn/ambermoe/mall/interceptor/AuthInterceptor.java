@@ -54,7 +54,9 @@ public class AuthInterceptor extends AbstractInterceptor {
                 "login",
                 "product",
                 "category",
-                "search"
+                "search",
+                "checkNameAndEmail",
+                "forgetPassword"
         };
         ActionContext ac = arg0.getInvocationContext();
         HttpServletRequest request = (HttpServletRequest) ac.get(StrutsStatics.HTTP_REQUEST);

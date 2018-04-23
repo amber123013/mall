@@ -73,9 +73,9 @@ function ajaxgetAddress() {
 				"<div class=\"new-addr-btn\">" +
 				"<a href=\"#\" class=\"hidden\">设为默认</a>" +
 				"<span class=\"new-addr-bar hidden\">|</span>"  +
-				"<a href=\"#\">编辑</a>"  +
+				"<a href=\"personaladdress\">编辑</a>"  +
 				"<span class=\"new-addr-bar\">|</span>" + 
-				"<a href=\"javascript:void(0);\" onclick=\"delClick(this);\">删除</a>" +
+				"<a href=\"personaladdress\" onclick=\"delClick(this);\">删除</a>" +
 				"</div>" +
 				"</li>";
             }
