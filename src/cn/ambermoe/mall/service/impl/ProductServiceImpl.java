@@ -66,7 +66,7 @@ public class ProductServiceImpl extends BaseServiceImpl implements ProductServic
     @Override
     public void setSaleAndReviewNumber(Product product) {
         //获取含product的订单项
-        int saleCount = orderItemService.total(product);
+        int saleCount = orderItemService.totalSale(product);
         product.setSaleCount(saleCount);
         int reviewCount = reviewService.total(product);
         product.setReviewCount(reviewCount);

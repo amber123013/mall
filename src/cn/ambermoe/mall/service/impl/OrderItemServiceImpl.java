@@ -2,6 +2,7 @@ package cn.ambermoe.mall.service.impl;
 
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -43,6 +44,24 @@ public class OrderItemServiceImpl extends BaseServiceImpl implements OrderItemSe
         order.setTotal(total);
         order.setOrderItems(orderItems);
         order.setTotalNumber(totalNumber);
+    }
+    /**
+     * 返回销量
+     */
+    @Override
+    public int totalSale(Object parent) {
+        String parentName = parent.getClass().getSimpleName();
+        String parentNameWithFirstLeterLower = StringUtils.uncapitalize(parentName);
+        
+        String sqlFormat = "select sum(number) from %s bean where bean.%s = ?";
+        String hql = String.format(sqlFormat, clazz.getName(), parentNameWithFirstLeterLower);
+        List<Long> l = this.find(hql, parent);
+        if(l.isEmpty())
+            return 0;
+        Long result= l.get(0);
+        if(null == result)
+            result = 0L;
+        return result.intValue();
     }
 
 }
