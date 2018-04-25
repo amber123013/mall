@@ -14,10 +14,14 @@ import cn.ambermoe.mall.pojo.OrderItem;
 import cn.ambermoe.mall.pojo.User;
 import cn.ambermoe.mall.service.OrderItemService;
 import cn.ambermoe.mall.service.OrderService;
+import cn.ambermoe.mall.service.ProductService;
 @Service
 public class OrderServiceImpl extends BaseServiceImpl implements OrderService {
     @Autowired
     OrderItemService orderItemService;
+    
+    @Autowired
+    ProductService productService;
     /**
      * 1. 把订单插入到数据库中
      * 2. 为每个OrderItem设置其订单
@@ -33,6 +37,8 @@ public class OrderServiceImpl extends BaseServiceImpl implements OrderService {
             oi.setOrder(order);
             orderItemService.update(oi);
             total += oi.getProduct().getPromotePrice() * oi.getNumber();
+            oi.getProduct().setStock(oi.getProduct().getStock() - oi.getNumber());
+            productService.update(oi.getProduct());
         }
         return total;
     }

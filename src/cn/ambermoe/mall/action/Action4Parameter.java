@@ -6,7 +6,7 @@ public class Action4Parameter extends Action4Service {
     protected String msg;
     //分类页面的排序变量
     protected String sort;
-    //当前所处于的web应用名称，如果按照教程来，就是tmall_ssh
+    //当前所处于的web应用名称
     protected String contextPath;
      
     //搜索关键字
